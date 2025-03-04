@@ -1,4 +1,4 @@
-package com.oshan.Snack.Sprint.models;
+package com.oshan.snack.sprint.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -6,21 +6,22 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class IngredientsItem {
+public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
-    private String name;
     @ManyToOne
-    private IngredientCategory category;
     @JsonIgnore
+    private Cart cart;
     @ManyToOne
-    private Restaurant restaurant;
-    private boolean isStock=true;
+    private Food food;
+    private Integer quantity;
+    private List<String> ingredients;
+    private Long totalPrice;
 
 }

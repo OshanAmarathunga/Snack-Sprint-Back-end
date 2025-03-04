@@ -1,4 +1,4 @@
-package com.oshan.Snack.Sprint.models;
+package com.oshan.snack.sprint.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;

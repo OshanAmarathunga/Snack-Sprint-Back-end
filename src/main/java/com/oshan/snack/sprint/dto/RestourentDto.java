@@ -1,4 +1,4 @@
-package com.oshan.Snack.Sprint.dto;
+package com.oshan.snack.sprint.dto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

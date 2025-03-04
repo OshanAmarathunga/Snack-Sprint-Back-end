@@ -1,4 +1,4 @@
-package com.oshan.Snack.Sprint.models;
+package com.oshan.snack.sprint.models;
 
 public enum USER_ROLE {
     ROLE_CUSTOMER,

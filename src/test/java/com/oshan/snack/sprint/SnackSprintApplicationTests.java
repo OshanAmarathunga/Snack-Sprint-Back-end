@@ -1,4 +1,4 @@
-package com.oshan.Snack.Sprint;
+package com.oshan.snack.sprint;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

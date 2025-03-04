@@ -1,4 +1,4 @@
-package com.oshan.Snack.Sprint;
+package com.oshan.snack.sprint;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

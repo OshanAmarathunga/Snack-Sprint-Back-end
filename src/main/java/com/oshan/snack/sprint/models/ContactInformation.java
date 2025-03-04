@@ -1,4 +1,4 @@
-package com.oshan.Snack.Sprint.models;
+package com.oshan.snack.sprint.models;
 
 import jakarta.persistence.Entity;
 import lombok.Data;

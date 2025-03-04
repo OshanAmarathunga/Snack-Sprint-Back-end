@@ -1,6 +1,6 @@
-package com.oshan.Snack.Sprint.models;
+package com.oshan.snack.sprint.models;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.oshan.Snack.Sprint.dto.RestourentDto;
+import com.oshan.snack.sprint.dto.RestourentDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
