@@ -55,6 +55,6 @@ public class AppConfig {
     @Bean
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
-    } 2.7.49
+    }
 
 }
