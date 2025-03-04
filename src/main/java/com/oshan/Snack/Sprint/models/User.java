@@ -22,8 +22,10 @@ public class User {
     private String password;
     private USER_ROLE ROLE;
     @JsonIgnore
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")
     private List<Order> orders=new ArrayList<Order>();
     @ElementCollection
     private List<RestourentDto> favorites=new ArrayList();
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true) //when one user delete, all the related  address will delete
+    private List<Address> addresses =new ArrayList<>();
 }
