@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public class RestaurantServiceImpl implements RestaurantService {
     @Autowired
@@ -61,22 +62,27 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public void deleteRestaurant(Long restaurantId) throws Exception {
-
+        Restaurant restaurant=findRestaurantById(restaurantId);
+        restaurantRepository.delete(restaurant);
     }
 
     @Override
     public List<Restaurant> getAllRestaurant() {
-        return List.of();
+        return restaurantRepository.findAll();
     }
 
     @Override
-    public List<Restaurant> searchRestaurant() {
-        return List.of();
+    public List<Restaurant> searchRestaurant(String keyword) {
+        return restaurantRepository.findBySearchQuery(keyword);
     }
 
     @Override
     public Restaurant findRestaurantById(Long id) throws Exception {
-        return null;
+        Optional<Restaurant> opt=restaurantRepository.findById(id);
+        if (opt.isEmpty()){
+            throw new Exception("Restaurant not found with this is");
+        }
+        return opt.get();
     }
 
     @Override
