@@ -6,6 +6,7 @@ import com.oshan.snack.sprint.models.Restaurant;
 import com.oshan.snack.sprint.models.User;
 import com.oshan.snack.sprint.repository.AddressRepository;
 import com.oshan.snack.sprint.repository.RestaurantRepository;
+import com.oshan.snack.sprint.repository.UserRepository;
 import com.oshan.snack.sprint.request.CreateRestaurantRequest;
 import com.oshan.snack.sprint.service.RestaurantService;
 import com.oshan.snack.sprint.service.UserService;
@@ -23,7 +24,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     private AddressRepository addressRepository;
 
     @Autowired
-    private UserService userService;
+    private UserRepository userRepository;
 
 
     @Override
@@ -87,12 +88,29 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Restaurant getRestaurantByUserId(Long userId) throws Exception {
-        return null;
+        Restaurant restaurant=restaurantRepository.findByOwnerId(userId);
+        if (restaurant==null){
+            throw new Exception("Restaurant not found with owner id"+userId);
+        }
+        return restaurant;
     }
 
     @Override
-    public RestourentDto addToFavorites(Long restaurantId) throws Exception {
-        return null;
+    public RestourentDto addToFavorites(Long restaurantId,User user) throws Exception {
+       Restaurant restaurant=findRestaurantById(restaurantId);
+       RestourentDto dto=new RestourentDto();
+       dto.setDescription(restaurant.getDescription());
+       dto.setImages(restaurant.getImages());
+       dto.setTitle(restaurant.getName());
+       dto.setId(restaurantId);
+       if (user.getFavorites().contains(dto)){
+           user.getFavorites().remove(dto);
+       }
+       else {
+           user.getFavorites().add(dto);
+       }
+       userRepository.save(user);
+       return dto;
     }
 
     @Override
