@@ -51,6 +51,29 @@ public class AdminRestaurantController {
         restaurantService.deleteRestaurant(id);
         MessageResponse res=new MessageResponse();
         res.setMessage("Restaurant Deleted success!");
-        return new ResponseEntity<>(res, HttpStatus.CREATED);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/status")
+    public ResponseEntity<Restaurant> updateRestaurantStatus(
+            @RequestBody CreateRestaurantRequest req,
+            @RequestHeader("Authorization") String jwt,
+            @PathVariable Long id
+    ) throws Exception {
+        User user=userService.findUserByJwtToken(jwt);
+        Restaurant restaurant = restaurantService.updateRestaurantStatus(id);
+
+        return new ResponseEntity<>(restaurant, HttpStatus.OK);
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<Restaurant> findRestaurantByUserId(
+            @RequestBody CreateRestaurantRequest req,
+            @RequestHeader("Authorization") String jwt
+    ) throws Exception {
+        User user=userService.findUserByJwtToken(jwt);
+        Restaurant restaurant = restaurantService.findRestaurantById(user.getId());
+
+        return new ResponseEntity<>(restaurant, HttpStatus.OK);
     }
 }
