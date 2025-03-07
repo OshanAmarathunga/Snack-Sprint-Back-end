@@ -1,0 +1,43 @@
+package com.oshan.snack.sprint.service.impl;
+
+import com.oshan.snack.sprint.models.Category;
+import com.oshan.snack.sprint.models.Restaurant;
+import com.oshan.snack.sprint.repository.CategoryRepository;
+import com.oshan.snack.sprint.service.CategoryService;
+import com.oshan.snack.sprint.service.RestaurantService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+@Service
+public class CategorySericeImpl implements CategoryService {
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private RestaurantService restaurantService;
+
+    @Override
+    public Category createCategory(String name, Long userId) throws Exception{
+        Restaurant restaurant=restaurantService.findRestaurantById(userId);
+        Category category=new Category();
+        category.setName(name);
+        category.setRestaurant(restaurant);
+
+        return categoryRepository.save(category);
+    }
+
+    @Override
+    public List<Category> findCategoryByRestaurantId(Long id) throws Exception {
+        return List.of();
+    }
+
+    @Override
+    public Category findCategoryById(Long id) throws Exception {
+        return null;
+    }
+}
