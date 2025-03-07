@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class CategorySericeImpl implements CategoryService {
 
@@ -23,7 +25,7 @@ public class CategorySericeImpl implements CategoryService {
 
     @Override
     public Category createCategory(String name, Long userId) throws Exception{
-        Restaurant restaurant=restaurantService.findRestaurantById(userId);
+        Restaurant restaurant=restaurantService.getRestaurantByUserId(userId);
         Category category=new Category();
         category.setName(name);
         category.setRestaurant(restaurant);
@@ -33,11 +35,17 @@ public class CategorySericeImpl implements CategoryService {
 
     @Override
     public List<Category> findCategoryByRestaurantId(Long id) throws Exception {
-        return List.of();
+        Restaurant restaurant=restaurantService.getRestaurantByUserId(id);
+
+        return categoryRepository.findByRestaurantId(restaurant.getId());
     }
 
     @Override
     public Category findCategoryById(Long id) throws Exception {
-        return null;
+        Optional<Category> optionalCategory=categoryRepository.findById(id);
+        if (optionalCategory.isEmpty()){
+            throw new Exception("Category not found");
+        }
+        return optionalCategory.get();
     }
 }
