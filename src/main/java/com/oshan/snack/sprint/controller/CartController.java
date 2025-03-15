@@ -1,5 +1,6 @@
 package com.oshan.snack.sprint.controller;
 
+import com.oshan.snack.sprint.models.Cart;
 import com.oshan.snack.sprint.models.CartItem;
 import com.oshan.snack.sprint.request.AddCartItemRequest;
 import com.oshan.snack.sprint.request.UpdateCartItemRequest;
@@ -27,6 +28,13 @@ public class CartController {
                                                   @RequestHeader("Authorization") String jwt ) throws Exception{
         CartItem cartItem=cartService.updateCartItemQuantity(req.getCartItemId(),req.getQuantity());
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/cart-item/{id}/remove")
+    public ResponseEntity<Cart> removeCartItem(@PathVariable Long id,
+                                               @RequestHeader("Authorization") String jwt ) throws Exception{
+        Cart cart=cartService.removeItemFromCart(id,jwt);
+        return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 
 
