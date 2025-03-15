@@ -96,16 +96,23 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public Cart findCartById(Long id) throws Exception {
-        return null;
+        Optional<Cart> optionalCart=cartRepository.findById(id);
+        if (optionalCart.isEmpty()){
+            throw new Exception("Cart not found with id "+ id);
+        }
+        return optionalCart.get();
     }
 
     @Override
     public Cart findCartByUserId(Long userId) throws Exception {
-        return null;
+        return cartRepository.findByCustomerId(userId);
     }
 
     @Override
     public Cart clearCart(Long userId) throws Exception {
-        return null;
+        Cart cart=findCartByUserId(userId);
+        cart.getItem().clear();
+        return cartRepository.save(cart);
+
     }
 }
