@@ -2,6 +2,7 @@ package com.oshan.snack.sprint.controller;
 
 import com.oshan.snack.sprint.models.CartItem;
 import com.oshan.snack.sprint.request.AddCartItemRequest;
+import com.oshan.snack.sprint.request.UpdateCartItemRequest;
 import com.oshan.snack.sprint.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,13 @@ public class CartController {
     public ResponseEntity<CartItem> addItemToCart(@RequestBody AddCartItemRequest req,
                                                   @RequestHeader("Authorization") String jwt ) throws Exception{
         CartItem cartItem=cartService.addItemToCart(req,jwt);
+        return new ResponseEntity<>(cartItem, HttpStatus.OK);
+    }
+
+    @PutMapping("/cart-item/update")
+    public ResponseEntity<CartItem> updateCartItemQuantity(@RequestBody UpdateCartItemRequest req,
+                                                  @RequestHeader("Authorization") String jwt ) throws Exception{
+        CartItem cartItem=cartService.updateCartItemQuantity(req.getCartItemId(),req.getQuantity());
         return new ResponseEntity<>(cartItem, HttpStatus.OK);
     }
 
