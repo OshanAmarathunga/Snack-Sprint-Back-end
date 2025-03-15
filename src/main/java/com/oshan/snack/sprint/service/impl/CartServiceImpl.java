@@ -14,6 +14,8 @@ import com.oshan.snack.sprint.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class CartServiceImpl implements CartService {
     @Autowired
@@ -56,7 +58,16 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public CartItem updateCartItemQuantity(Long cartItemId, int quantity) throws Exception {
-        return null;
+        Optional<CartItem> cartItemOptional=cartItemRepository.findById(cartItemId);
+        if (cartItemOptional.isEmpty()){
+            throw new Exception("Cart item not found");
+        }
+        CartItem item=cartItemOptional.get();
+        item.setQuantity(quantity);
+
+        item.setTotalPrice(item.getFood().getPrice()*quantity);
+        return cartItemRepository.save(item);
+
     }
 
     @Override
