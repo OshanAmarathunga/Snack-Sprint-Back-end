@@ -79,7 +79,8 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void cancelOrder(Long orderId) throws Exception {
-
+        Order order=findOrderById(orderId);
+        orderRepository.deleteById(orderId);
     }
 
     @Override
@@ -90,5 +91,10 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getRestaurantsOrder(Long restaurantId, String orderStatus) throws Exception {
         return List.of();
+    }
+
+    @Override
+    public Order findOrderById(Long orderId) throws Exception {
+        return null;
     }
 }
