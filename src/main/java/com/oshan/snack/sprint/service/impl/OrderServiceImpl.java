@@ -9,9 +9,9 @@ import com.oshan.snack.sprint.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
+
 @Service
 public class OrderServiceImpl implements OrderService {
     @Autowired
@@ -95,16 +95,26 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public List<Order> getUserOrder(Long userId) throws Exception {
-        return List.of();
+        return orderRepository.findByCustomerId(userId);
     }
 
     @Override
     public List<Order> getRestaurantsOrder(Long restaurantId, String orderStatus) throws Exception {
-        return List.of();
+       List<Order> orders= orderRepository.findByRestaurantId(restaurantId);
+       if (orderStatus!=null){
+           orders=orders.stream().filter(order->order.getOrderStatus().equals(orderStatus)).collect(Collectors.toList());
+       }
+
+       return orders;
     }
 
     @Override
     public Order findOrderById(Long orderId) throws Exception {
-        return null;
+        Optional<Order> optionalOrder=  orderRepository.findById(orderId);
+        if (optionalOrder.isEmpty()){
+            throw new Exception("Order not found");
+        }
+
+        return optionalOrder.get();
     }
 }
